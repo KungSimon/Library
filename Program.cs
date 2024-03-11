@@ -82,6 +82,7 @@ namespace Library
 
             library.RegisterCommand("Borrow book", new BorrowBookCommand(inventory, user));
             library.RegisterCommand("Return book", new ReturnBookCommand(inventory, user));
+            library.RegisterCommand("Add a new book", new AddNewBook(inventory, user));
             library.RegisterCommand("Quit", new QuitCommand());
 
             
@@ -89,7 +90,7 @@ namespace Library
             while (true)
             {
                 Console.WriteLine("What do you want to do?");
-                Console.WriteLine("Borrow book? \t Return book? \t Quit ");
+                Console.WriteLine("Borrow book?\t Return book?\t Add a new book\t Quit ");
                 
                 var commandName = Console.ReadLine();
 

@@ -20,7 +20,7 @@ namespace Library.Commands
 
         public void Execute()
         {
-            if (_currentUser is Customer customer)
+            /*if (_currentUser is Customer customer)
             {
                 if (customer.BorrowedBooks > 0) // Check if there are borrowed books
                 {
@@ -54,7 +54,7 @@ namespace Library.Commands
             else
             {
                 Console.WriteLine("This functionality is only available for customers.");
-            }
+            }*/
         }
 
         public string GetDescription()
