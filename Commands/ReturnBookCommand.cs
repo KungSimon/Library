@@ -21,6 +21,7 @@ namespace Library.Commands
 
         public void Execute()
         {
+            _customer.ListBorrowedBooks();
             Console.WriteLine("Enter the title of the book you want to return: ");
             string title = Console.ReadLine();
 

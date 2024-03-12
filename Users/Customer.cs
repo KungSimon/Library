@@ -35,6 +35,15 @@ namespace Library.Users
         {
             BorrowedBooks.Remove(bookCopy);
         }
+
+        public void ListBorrowedBooks()
+        {
+            Console.WriteLine($"Borrowed book by {Name}");
+            foreach(var bookCopy in BorrowedBooks)
+            {
+                Console.WriteLine($"{bookCopy.Book.Title} by {bookCopy.Book.Author}");
+            }
+        }
         /*public Customer(string name, int borrowedBooks)
         {
             Name = name;
