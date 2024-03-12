@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Library.Books;
 
-namespace Library
+namespace Library.Interfaces
 {
-    internal interface ILibraryObserver
+    public class IMenuOption
     {
-        void Update(Book book);
+        public string Text { get; }
+        public Action Action { get; }
     }
 }

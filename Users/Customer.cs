@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Library.Books;
+using Library.Interfaces;
 
 namespace Library.Users
 {
@@ -11,6 +12,7 @@ namespace Library.Users
     {
         public string Name { get; set; }
         public int borrowedBooks;
+        public bool IsLibrarian { get => false; set { } }
 
         public Customer(string name, int borrowedBooks)
         {
@@ -24,6 +26,7 @@ namespace Library.Users
         }
 
         public int BorrowedBooks { get => borrowedBooks; }
+       
 
         public void BorrowBook(PhysicalBookCopy bookCopy)
         {

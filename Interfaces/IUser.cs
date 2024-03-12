@@ -5,11 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Library.Books;
 
-namespace Library.Users
+namespace Library.Interfaces
 {
     public interface IUser
     {
         string Name { get; set; }
+
+        public bool IsLibrarian { get; set; }
         bool HasBorrowingPermission(Book book);
 
     }

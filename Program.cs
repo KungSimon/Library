@@ -1,5 +1,7 @@
 ﻿using Library.Books;
 using Library.Commands;
+using Library.Interfaces;
+using Library.Menus;
 using Library.Users;
 using System.ComponentModel.Design;
 
@@ -26,11 +28,15 @@ namespace Library
             //IUser user;
             if (userTypeChoice == "1")
             {
-                user = userManager.CreateCustomer();  
+                user = userManager.CreateCustomer();
+                user.IsLibrarian = false;
+                CustomerMenu customerMenu = new CustomerMenu(user, inventory);
+                customerMenu.DisplayMenu();
             }
             else if (userTypeChoice == "2")
             {
                 user = new Librarian("Librarian");  
+                user.IsLibrarian = true;
             }
             else
             {
@@ -80,22 +86,22 @@ namespace Library
             
 
 
-            library.RegisterCommand("Borrow book", new BorrowBookCommand(inventory, user));
-            library.RegisterCommand("Return book", new ReturnBookCommand(inventory, user));
-            library.RegisterCommand("Add a new book", new AddNewBook(inventory, user));
-            library.RegisterCommand("Quit", new QuitCommand());
-
-            
-
-            while (true)
-            {
-                Console.WriteLine("What do you want to do?");
-                Console.WriteLine("Borrow book?\t Return book?\t Add a new book\t Quit ");
-                
-                var commandName = Console.ReadLine();
-
-                library.RunCommand(commandName);
-            }
+           //library.RegisterCommand("Borrow book", new BorrowBookCommand(inventory, user));
+           //library.RegisterCommand("Return book", new ReturnBookCommand(inventory, user));
+           //library.RegisterCommand("Add a new book", new AddNewBook(inventory, user));
+           //library.RegisterCommand("Quit", new QuitCommand());
+           //
+           //
+           //
+           //while (true)
+           //{
+           //    Console.WriteLine("What do you want to do?");
+           //    Console.WriteLine("Borrow book?\t Return book?\t Add a new book?\t Quit ");
+           //    
+           //    var commandName = Console.ReadLine();
+           //
+           //    library.RunCommand(commandName);
+           //}
         }
     }
 }

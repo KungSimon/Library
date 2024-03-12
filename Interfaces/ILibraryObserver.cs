@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Library.Books;
 
-namespace Library.Commands
+namespace Library.Interfaces
 {
-    public interface ICommand
+    internal interface ILibraryObserver
     {
-        void Execute();
-
-        string GetDescription();
+        void Update(Book book);
     }
 }
