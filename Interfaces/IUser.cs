@@ -14,5 +14,6 @@ namespace Library.Interfaces
         public bool IsLibrarian { get; set; }
         bool HasBorrowingPermission(Book book);
 
+
     }
 }

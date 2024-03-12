@@ -68,10 +68,12 @@ namespace Library
             //IUser user;
             if (userTypeChoice == "1")
             {
+                
                 user = userManager.CreateCustomer();
                 user.IsLibrarian = false;
+                Customer customer = (Customer)user;
                 library.RegisterCommand("1", new BorrowBookCommand(inventory, user));
-                library.RegisterCommand("2", new ReturnBookCommand(inventory, user));
+                library.RegisterCommand("2", new ReturnBookCommand(inventory, customer));
                 library.RegisterCommand("3", new SortBookByTitleCommand(inventory.availableBooks.Select(pb => pb.Book).ToList()));
                 library.RegisterCommand("4", new QuitCommand());
             }

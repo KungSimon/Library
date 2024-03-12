@@ -47,23 +47,14 @@ namespace Library
                 availableCopy.Quantity--;
                 availableBooks.Remove(availableCopy);
                 //Console.WriteLine($"You have now successfully borrowed {availableCopy.Book.Title}.");
-                return true; // Return true if borrowing was successful
+                return true;
             }
             else
             {
-                // Book not found or unavailable
-                return false; // Return false if borrowing failed
+                return false;
             }
         }
-        /*public void BorrowBook(string title, int quantityToBorrow)
-        {
-            var book = availableBooks.FirstOrDefault(b => b.GetTitle() == title);
-            if (book != null)
-            {
-                availableBooks.Remove(book);
-                Console.WriteLine($"You have now successfully borrowed {book.GetTitle()}.");
-            }
-        }*/
+
 
         public void NotifyObservers(Book book)
         {
@@ -80,42 +71,28 @@ namespace Library
             if (availableCopy != null)
             {
                 availableCopy.IsBorrowed = true;
-                availableCopy.Quantity--;  
+                availableCopy.Quantity--;
                 availableBooks.Remove(availableCopy);
                 //Console.WriteLine($"You have now successfully borrowed {availableCopy.Book.Title}.");
                 return availableCopy;
             }
             return null;
 
-            /*var availableCopy = availableBooks.FirstOrDefault(b => b.Book.Title == title && !b.IsBorrowed);
-            if (availableCopy != null)
-            {
-                availableCopy.IsBorrowed = true;
-                availableBooks.Remove(availableCopy); // Remove the borrowed copy
-                Console.WriteLine($"You have now successfully borrowed {availableCopy.Book.Title}.");
-                return availableCopy;
             }
-            return null;*/
-        }
-        /*public bool ReturnBook(string title, Customer customer)
+        public bool ReturnBook(string title, Customer customer)
         {
-            // ... Your logic to check if the book is available for return and update inventory
-            // This might involve finding the book by title, checking if it's borrowed by the customer,
-            // updating the book's availability, and removing it from the customer's borrowed list.
-
-            // Example (replace with your actual implementation)
-            var availableCopy = availableBooks.FirstOrDefault(b => b.Book.Title == title && b.IsBorrowed && b.BorrowedBy == customer);
-            if (availableCopy != null)
+            var borrowedCopy = customer.BorrowedBooks.FirstOrDefault(b => b.Book.Title == title);
+            if (borrowedCopy != null)
             {
-                availableCopy.IsBorrowed = false;
-                customer.RemoveBorrowedBook(title); // Remove from customer's list
+                availableBooks.Add(borrowedCopy); // Add the book copy back to inventory
+                customer.BorrowedBooks.Remove(borrowedCopy); // Remove from customer's borrowed list
+                borrowedCopy.IsBorrowed = false; // Update the book copy's borrowed status
                 return true;
             }
             else
             {
                 return false;
             }
-        }*/
-
+        }
     }
 }

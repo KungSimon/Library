@@ -11,10 +11,31 @@ namespace Library.Users
     public class Customer : IUser
     {
         public string Name { get; set; }
-        public int borrowedBooks;
+        //public int borrowedBooks;
+        public List<PhysicalBookCopy> BorrowedBooks { get; } = new List<PhysicalBookCopy>();
         public bool IsLibrarian { get => false; set { } }
 
-        public Customer(string name, int borrowedBooks)
+        public Customer(string name)
+        {
+            Name = name;
+        }
+
+        public bool HasBorrowingPermission(Book book)
+        {
+            // Implement your logic here
+            return true;
+        }
+
+        public void BorrowBook(PhysicalBookCopy bookCopy)
+        {
+            BorrowedBooks.Add(bookCopy);
+        }
+
+        public void ReturnBook(PhysicalBookCopy bookCopy)
+        {
+            BorrowedBooks.Remove(bookCopy);
+        }
+        /*public Customer(string name, int borrowedBooks)
         {
             Name = name;
             this.borrowedBooks = 0;
@@ -36,6 +57,8 @@ namespace Library.Users
         public void ReturnBook(PhysicalBookCopy bookCopy)
         {
             borrowedBooks--;
-        }
+        }*/
+
+
     }
 }
