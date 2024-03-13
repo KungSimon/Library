@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Library.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Library.Books
 {
-    public class Book
+    public class Book : ILibraryItem
     {
         public string Title { get; set; }
         public string Author { get; set; }
@@ -17,6 +18,16 @@ namespace Library.Books
             Title = title;
             Author = author;
             Genre = genre;
+        }
+
+        public void Display()
+        {
+            Console.WriteLine($"Book: {Title} Genre: {Genre} by {Author}");
+        }
+
+        public void Rate(int rating)
+        {
+            throw new NotImplementedException();
         }
     }
 }
