@@ -7,6 +7,7 @@ using System.ComponentModel.Design;
 
 namespace Library
 {
+    //Funkar inte att lägga till ny bok och sedan sortera!!!!!
     internal class Program
     {
         static void Main(string[] args)
@@ -81,7 +82,7 @@ namespace Library
             {
                 user = new Librarian("Librarian");
                 user.IsLibrarian = true;
-                library.RegisterCommand("1", new AddNewBook(inventory, user));
+                library.RegisterCommand("1", new AddNewBookCommand(inventory, user));
                 library.RegisterCommand("2", new SortBookByTitleCommand(inventory.availableBooks.Select(pb => pb.Book).ToList()));
                 library.RegisterCommand("3", new QuitCommand());
             }

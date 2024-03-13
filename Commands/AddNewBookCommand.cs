@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace Library.Commands
 {
-    public class AddNewBook : ICommand
+    public class AddNewBookCommand : ICommand
     {
         Librarian librarian;
         BookBuilder bookBuilder;
         LibraryInventory inventory;
         private IUser user;
 
-        public AddNewBook(LibraryInventory inventory, IUser user)
+        public AddNewBookCommand(LibraryInventory inventory, IUser user)
         {
             this.inventory = inventory;
             this.user = user;
