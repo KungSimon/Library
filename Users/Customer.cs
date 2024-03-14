@@ -44,30 +44,5 @@ namespace Library.Users
                 Console.WriteLine($"{bookCopy.Book.Title} by {bookCopy.Book.Author}");
             }
         }
-        /*public Customer(string name, int borrowedBooks)
-        {
-            Name = name;
-            this.borrowedBooks = 0;
-        }
-
-        public bool HasBorrowingPermission(Book book)
-        {
-            return true;
-        }
-
-        public int BorrowedBooks { get => borrowedBooks; }
-       
-
-        public void BorrowBook(PhysicalBookCopy bookCopy)
-        {
-            borrowedBooks++;
-        }
-
-        public void ReturnBook(PhysicalBookCopy bookCopy)
-        {
-            borrowedBooks--;
-        }*/
-
-
     }
 }

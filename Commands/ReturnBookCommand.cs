@@ -54,21 +54,6 @@ namespace Library.Commands
             {
                 Console.WriteLine($"You have not borrowed a book titled {title}.");
             }
-            /*_customer.ListBorrowedBooks();
-            Console.WriteLine("Enter the title of the book you want to return: ");
-            string title = Console.ReadLine();
-
-            bool success = _inventory.ReturnBook(title, _customer);
-
-            if (success)
-            {
-                Console.WriteLine($"Book {title} returned successfully.");
-            }
-            else
-            {
-                Console.WriteLine($"Book {title} not found or cannot be returned.");
-            }*/
-
         }
             public string GetDescription()
         {

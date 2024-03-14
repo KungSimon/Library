@@ -14,12 +14,14 @@ namespace Library.Commands
         Librarian librarian;
         BookBuilder bookBuilder;
         LibraryInventory inventory;
-        private IUser user;
+        //private IUser user;
+        private Dictionary<string, ICommand> commands;
 
-        public AddNewBookCommand(LibraryInventory inventory, IUser user)
+        public AddNewBookCommand(LibraryInventory inventory, Dictionary<string, ICommand> commands, IUser user)
         {
             this.inventory = inventory;
-            this.user = user;
+            //this.user = user;
+            this.commands = commands;
         }
 
         public void Execute()
@@ -39,6 +41,14 @@ namespace Library.Commands
                 .SetGenre(bookGenre)
                 .Build();
             inventory.AddBook(newBook, int.Parse(bookCopies));
+            //inventory.ListBooks();
+            // Update the list of available books after adding a new book
+            //var availableBooks = inventory.availableBooks.Select(pb => pb.Book).ToList();
+            //commands["2"] = new SortBookByTitleCommand(availableBooks); // Assuming "3" is the command for sorting books
+            //commands["2"] = new SortBookByTitleCommand(inventory.availableBooks.Select(pb => pb.Book).ToList());
+
+            // Execute the sorting command immediately after updating
+            //commands["2"].Execute();
         }
 
         public string GetDescription()

@@ -12,15 +12,18 @@ namespace Library
     {
         static void Main(string[] args)
         {
-            IUserRepository userRepository = new CSVUserRepository("users.csv");
+            Library library = new Library();
+            library.RunLibrary();
+            /*IUserRepository userRepository = new CSVUserRepository("users.csv");
             UserManager userManager = new UserManager(userRepository);
             List<Customer> customers = new List<Customer>();
             //customers.Add((Customer)userManager.CreateCustomer());
             List<Book> books = new List<Book>();
-            ICommand sortBooksCommand = new SortBookByTitleCommand(books);
+            //ICommand sortBooksCommand = new SortBookByTitleCommand(books);
             userManager.SaveUsers(customers);
             Library library = new Library();
             LibraryInventory inventory = new LibraryInventory();
+            Dictionary<string, ICommand> commands = new Dictionary<string, ICommand>();
 
             IUser user; //= userManager.CreateCustomer();
 
@@ -75,15 +78,15 @@ namespace Library
                 Customer customer = (Customer)user;
                 library.RegisterCommand("1", new BorrowBookCommand(inventory, user));
                 library.RegisterCommand("2", new ReturnBookCommand(inventory, customer));
-                library.RegisterCommand("3", new SortBookByTitleCommand(inventory.availableBooks.Select(pb => pb.Book).ToList()));
+                library.RegisterCommand("3", new SortBookByTitleCommand(inventory));
                 library.RegisterCommand("4", new QuitCommand());
             }
             else if (userTypeChoice == "2")
             {
                 user = new Librarian("Librarian");
                 user.IsLibrarian = true;
-                library.RegisterCommand("1", new AddNewBookCommand(inventory, user));
-                library.RegisterCommand("2", new SortBookByTitleCommand(inventory.availableBooks.Select(pb => pb.Book).ToList()));
+                library.RegisterCommand("1", new AddNewBookCommand(inventory, commands, user));
+                library.RegisterCommand("2", new SortBookByTitleCommand(inventory));
                 library.RegisterCommand("3", new QuitCommand());
             }
             else
@@ -108,7 +111,7 @@ namespace Library
                 var commandName = Console.ReadLine();
 
                 library.RunCommand(commandName);
-            }
+            }*/
         }
     }
 }

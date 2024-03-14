@@ -10,21 +10,22 @@ namespace Library.Commands
 {
     public class SortBookByTitleCommand : ICommand
     {
-        private readonly List<Book> books;
+        private readonly LibraryInventory inventory;
 
-        public SortBookByTitleCommand(List<Book> books)
+        public SortBookByTitleCommand(LibraryInventory inventory)
         {
-            this.books = books;
+            this.inventory = inventory;
         }
 
         public void Execute()
         {
-            if (books == null || books.Count == 0)
+            if (inventory == null || !inventory.availableBooks.Any())
             {
                 Console.WriteLine("No books available to sort.");
                 return;
             }
 
+            var books = inventory.availableBooks.Select(pb => pb.Book).ToList();
             BookSorter.QuickSortByTitle(books);
 
             Console.WriteLine("Books sorted by title:");
@@ -32,8 +33,6 @@ namespace Library.Commands
             {
                 Console.WriteLine($"{book.Title} by {book.Author}");
             }
-            //BookSorter.QuickSortByTitle(books);
-            //Console.WriteLine("Books sorted by title. ");
         }
 
         public string GetDescription()
@@ -41,4 +40,35 @@ namespace Library.Commands
             return "Sort books by title";
         }
     }
+    /*private readonly List<Book> books;
+
+    public SortBookByTitleCommand(List<Book> books)
+    {
+        this.books = books;
+    }
+
+    public void Execute()
+    {
+        if (books == null || books.Count == 0)
+        {
+            Console.WriteLine("No books available to sort.");
+            return;
+        }
+
+        BookSorter.QuickSortByTitle(books);
+
+        Console.WriteLine("Books sorted by title:");
+        foreach (var book in books)
+        {
+            Console.WriteLine($"{book.Title} by {book.Author}");
+        }
+        //BookSorter.QuickSortByTitle(books);
+        //Console.WriteLine("Books sorted by title. ");
+    }
+
+    public string GetDescription()
+    {
+        return "Sort books by title";
+    }*/
+
 }
