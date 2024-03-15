@@ -11,7 +11,6 @@ namespace Library.Users
     public class Customer : IUser
     {
         public string Name { get; set; }
-        //public int borrowedBooks;
         public List<PhysicalBookCopy> BorrowedBooks { get; } = new List<PhysicalBookCopy>();
         public bool IsLibrarian { get => false; set { } }
 
@@ -22,7 +21,6 @@ namespace Library.Users
 
         public bool HasBorrowingPermission(Book book)
         {
-            // Implement your logic here
             return true;
         }
 

@@ -21,8 +21,6 @@ namespace Library.Users
             Console.WriteLine("Enter your name: ");
             string name = Console.ReadLine();
             Console.WriteLine("Maximum number of books you can borrow: 5");
-
-            //return new Customer(name, 5);
             return new Customer(name);
         }
 

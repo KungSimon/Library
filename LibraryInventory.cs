@@ -47,7 +47,6 @@ namespace Library
                 availableCopy.IsBorrowed = true;
                 availableCopy.Quantity--;
                 availableBooks.Remove(availableCopy);
-                //Console.WriteLine($"You have now successfully borrowed {availableCopy.Book.Title}.");
                 return true;
             }
             else
@@ -71,9 +70,9 @@ namespace Library
             var borrowedCopy = customer.BorrowedBooks.FirstOrDefault(b => b.Book.Title == title);
             if (borrowedCopy != null)
             {
-                availableBooks.Add(borrowedCopy); // Add the book copy back to inventory
-                customer.BorrowedBooks.Remove(borrowedCopy); // Remove from customer's borrowed list
-                borrowedCopy.IsBorrowed = false; // Update the book copy's borrowed status
+                availableBooks.Add(borrowedCopy);
+                customer.BorrowedBooks.Remove(borrowedCopy); 
+                borrowedCopy.IsBorrowed = false; 
                 return true;
             }
             else

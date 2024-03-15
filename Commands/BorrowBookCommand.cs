@@ -10,7 +10,6 @@ namespace Library.Commands
 {
     public class BorrowBookCommand : ICommand
     {
-        //private LibraryInventory inventory;
 
         LibraryInventory inventory = new LibraryInventory();
 
@@ -28,7 +27,7 @@ namespace Library.Commands
 
             if (currentUser is Customer customer)
             {
-                if (customer.BorrowedBooks.Count < 5) // Check if the number of borrowed books is less than 5
+                if (customer.BorrowedBooks.Count < 5) 
                 {
                     Console.WriteLine("Available books: ");
                     inventory.ListBooks();
@@ -43,7 +42,7 @@ namespace Library.Commands
                         var bookCopy = inventory.availableBooks.FirstOrDefault(b => b.Book.Title == bookTitle);
                         if (bookCopy != null)
                         {
-                            customer.BorrowBook(bookCopy); // Update customer's borrowed books
+                            customer.BorrowBook(bookCopy); 
                             Console.WriteLine($"You have now successfully borrowed {bookTitle}.");
                         }
                     }

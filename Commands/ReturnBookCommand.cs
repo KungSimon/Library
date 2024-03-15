@@ -29,16 +29,13 @@ namespace Library.Commands
             PhysicalBookCopy borrowedBook = _customer.BorrowedBooks.FirstOrDefault(book => book.Book.Title == title);
             if (borrowedBook != null)
             {
-                // Decorate the book with rating functionality
                 ILibraryItem ratedBook = new RatingDecorator(borrowedBook.Book);
 
                 Console.WriteLine("Please rate the book (1-5): ");
                 int rating = int.Parse(Console.ReadLine());
 
-                // Rate the book using the decorator
                 ratedBook.Rate(rating);
 
-                // Attempt to return the book
                 bool success = _inventory.ReturnBook(title, _customer);
 
                 if (success)
