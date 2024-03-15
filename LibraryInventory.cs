@@ -14,14 +14,7 @@ namespace Library
         public List<PhysicalBookCopy> availableBooks = new List<PhysicalBookCopy>();
         private List<ILibraryObserver> observers = new List<ILibraryObserver>();
 
-        public void AddBook(Book book, int quantity)
-        {
-            for (int i = 0; i < quantity; i++)
-            {
-                availableBooks.Add(new PhysicalBookCopy(book, quantity));
-            }
-            NotifyObservers(book);
-        }
+       
 
         public void ListBooks()
         {
@@ -36,6 +29,14 @@ namespace Library
                 var book = availableBooks[i];
                 Console.WriteLine($"{i + 1}.{book.GetTitle()}");
             }
+        }
+        public void AddBook(Book book, int quantity)
+        {
+            for (int i = 0; i < quantity; i++)
+            {
+                availableBooks.Add(new PhysicalBookCopy(book, quantity));
+            }
+            NotifyObservers(book);
         }
 
         public bool BorrowBook(string title)
@@ -64,21 +65,7 @@ namespace Library
             }
         }
 
-        public PhysicalBookCopy _BorrowBook(string title)
-        {
 
-            var availableCopy = availableBooks.FirstOrDefault(b => b.Book.Title == title && !b.IsBorrowed);
-            if (availableCopy != null)
-            {
-                availableCopy.IsBorrowed = true;
-                availableCopy.Quantity--;
-                availableBooks.Remove(availableCopy);
-                //Console.WriteLine($"You have now successfully borrowed {availableCopy.Book.Title}.");
-                return availableCopy;
-            }
-            return null;
-
-            }
         public bool ReturnBook(string title, Customer customer)
         {
             var borrowedCopy = customer.BorrowedBooks.FirstOrDefault(b => b.Book.Title == title);

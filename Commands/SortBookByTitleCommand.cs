@@ -10,11 +10,14 @@ namespace Library.Commands
 {
     public class SortBookByTitleCommand : ICommand
     {
-        private readonly LibraryInventory inventory;
 
-        public SortBookByTitleCommand(LibraryInventory inventory)
+        private readonly LibraryInventory inventory;
+        private readonly ISortStrategy sortStrategy;
+
+        public SortBookByTitleCommand(LibraryInventory inventory, ISortStrategy sortStrategy)
         {
             this.inventory = inventory;
+            this.sortStrategy = sortStrategy;
         }
 
         public void Execute()
@@ -25,13 +28,13 @@ namespace Library.Commands
                 return;
             }
 
-            var books = inventory.availableBooks.Select(pb => pb.Book).ToList();
-            BookSorter.QuickSortByTitle(books);
+            var books = inventory.availableBooks.ToList();
+            sortStrategy.Sort(books);
 
             Console.WriteLine("Books sorted by title:");
             foreach (var book in books)
             {
-                Console.WriteLine($"{book.Title} by {book.Author}");
+                Console.WriteLine($"{book.Book.Title} by {book.Book.Author}");
             }
         }
 
@@ -40,6 +43,36 @@ namespace Library.Commands
             return "Sort books by title";
         }
     }
+    /*private readonly LibraryInventory inventory;
+
+    public SortBookByTitleCommand(LibraryInventory inventory)
+    {
+        this.inventory = inventory;
+    }
+
+    public void Execute()
+    {
+        if (inventory == null || !inventory.availableBooks.Any())
+        {
+            Console.WriteLine("No books available to sort.");
+            return;
+        }
+
+        var books = inventory.availableBooks.Select(pb => pb.Book).ToList();
+        BookSorter.QuickSortByTitle(books);
+
+        Console.WriteLine("Books sorted by title:");
+        foreach (var book in books)
+        {
+            Console.WriteLine($"{book.Title} by {book.Author}");
+        }
+    }
+
+    public string GetDescription()
+    {
+        return "Sort books by title";
+    }*/
+}
     /*private readonly List<Book> books;
 
     public SortBookByTitleCommand(List<Book> books)
@@ -70,5 +103,5 @@ namespace Library.Commands
     {
         return "Sort books by title";
     }*/
+    
 
-}

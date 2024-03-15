@@ -38,7 +38,7 @@ namespace Library.Users
 
         public void ListBorrowedBooks()
         {
-            Console.WriteLine($"Borrowed book by {Name}");
+            Console.WriteLine($"Borrowed books by: {Name}");
             foreach(var bookCopy in BorrowedBooks)
             {
                 Console.WriteLine($"{bookCopy.Book.Title} by {bookCopy.Book.Author}");

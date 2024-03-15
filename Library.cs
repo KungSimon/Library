@@ -22,15 +22,17 @@ namespace Library
         List<Book> books = new List<Book>();
         public bool programRunning = true;
         public Dictionary<string, ICommand> commands = new Dictionary<string, ICommand>();
+        ISortStrategy strategy;
         IUser user;
+        private readonly LibraryCommandExecutor commandExecutor;
 
 
         public Library()
         {
-            
             userManager = new UserManager(userRepository);
             inventory = new LibraryInventory();
             userManager.SaveUsers(customers);
+            //commandExecutor = new LibraryCommandExecutor(inventory);
             InitializeBooks();
         }
 
@@ -101,18 +103,113 @@ namespace Library
             Console.WriteLine("Are you a (1) Customer or (2) Librarian? ");
             string userTypeChoice = Console.ReadLine();
 
-            //IUser user;
+            InitializeUser(userTypeChoice);
+
+            while (true)
+            {
+                Console.WriteLine("What do you want to do?");
+                DisplayUserOptions(user.IsLibrarian);
+
+                var commandName = Console.ReadLine();
+
+                if (commandName == "2" && user.IsLibrarian)
+                {
+                    ChooseSortingAlgorithm();
+                    RunCommand("2"); 
+                }
+                else if (commandName == "3" && (!user.IsLibrarian))
+                {
+                    ChooseSortingAlgorithm();
+                    RunCommand("3"); 
+                }
+                else
+                {
+                    RunCommand(commandName);
+                }
+            }
+        }
+
+        private void InitializeUser(string userTypeChoice)
+        {
+            if (userTypeChoice == "1")
+            {
+                user = userManager.CreateCustomer();
+                user.IsLibrarian = false;
+                RegisterCustomerCommands();
+            }
+            else if (userTypeChoice == "2")
+            {
+                Librarian librarian = new Librarian("Librarian");
+                user = librarian; // Initialize the user object here
+                user.IsLibrarian = true;
+                RegisterLibrarianCommands();
+            }
+            else
+            {
+                Console.WriteLine("Invalid choice. Please enter 1 or 2.");
+                Environment.Exit(0); // Exit gracefully
+            }
+        }
+
+        private void RegisterCustomerCommands()
+        {
+            RegisterCommand("1", new BorrowBookCommand(inventory, user));
+            RegisterCommand("2", new ReturnBookCommand(inventory, (Customer)user));
+            RegisterCommand("3", new SortBookByTitleCommand(inventory, new QuickSortStrategy()));
+            RegisterCommand("4", new QuitCommand());
+        }
+
+        private void RegisterLibrarianCommands()
+        {
+            RegisterCommand("1", new AddNewBookCommand(inventory, commands, user));
+            RegisterCommand("2", new SortBookByTitleCommand(inventory, new QuickSortStrategy()));
+            RegisterCommand("3", new QuitCommand());
+        }
+
+        private void ChooseSortingAlgorithm()
+        {
+            Console.WriteLine("Choose your sorting algorithm:");
+            Console.WriteLine("1. QuickSort");
+            Console.WriteLine("2. BubbleSort");
+            Console.Write("Enter your choice: ");
+
+            string choice = Console.ReadLine();
+
+            if (choice == "2")
+            {
+                strategy = new BubbleSortStrategy();
+            }
+            else
+            {
+                strategy = new QuickSortStrategy();
+            }
+        }
+
+        private void DisplayUserOptions(bool isLibrarian)
+        {
+            if (isLibrarian)
+            {
+                Console.WriteLine("(1) Add a new book\t(2) Sort Books by Title\t(3) Quit");
+            }
+            else
+            {
+                Console.WriteLine("(1) Borrow book\t(2) Return book\t(3) Sort Books by Title\t(4) Quit");
+            }
+        }
+        /*public void RunLibrary()
+        {
+            Console.WriteLine("Welcome to the Library!");
+            Console.WriteLine("Are you a (1) Customer or (2) Librarian? ");
+            string userTypeChoice = Console.ReadLine();
+
             if (userTypeChoice == "1")
             {
                 Customer customer = (Customer)userManager.CreateCustomer();
-                //user = userManager.CreateCustomer();
-                //user.IsLibrarian = false;
                 customer.IsLibrarian = false;
-                //Customer customer = (Customer)user;
                 user = customer;
                 RegisterCommand("1", new BorrowBookCommand(inventory, user));
                 RegisterCommand("2", new ReturnBookCommand(inventory, customer));
-                RegisterCommand("3", new SortBookByTitleCommand(inventory));
+                RegisterCommand("3", new SortBookByTitleCommand(inventory, strategy));
                 RegisterCommand("4", new QuitCommand());
             }
             else if (userTypeChoice == "2")
@@ -120,10 +217,8 @@ namespace Library
                 Librarian librarian = new Librarian("Librarian");
                 librarian.IsLibrarian = true;
                 user = librarian;
-                //user = new Librarian("Librarian");
-                //user.IsLibrarian = true;
                 RegisterCommand("1", new AddNewBookCommand(inventory, commands, user));
-                RegisterCommand("2", new SortBookByTitleCommand(inventory));
+                RegisterCommand("2", new SortBookByTitleCommand(inventory, strategy));
                 RegisterCommand("3", new QuitCommand());
             }
             else
@@ -147,9 +242,37 @@ namespace Library
 
                 var commandName = Console.ReadLine();
 
-                RunCommand(commandName);
+                if ((commandName == "2" && user.IsLibrarian) || (commandName == "3" && !user.IsLibrarian))
+                {
+                    Console.WriteLine("Choose sorting algorithm:");
+                    Console.WriteLine("1. QuickSort");
+                    Console.WriteLine("2. BubbleSort");
+                    Console.Write("Enter your choice: ");
+
+                    string choice = Console.ReadLine();
+
+                    ISortStrategy sortStrategy;
+                    if (choice == "1")
+                    {
+                        sortStrategy = new QuickSortStrategy();
+                    }
+                    else if (choice == "2")
+                    {
+                        sortStrategy = new BubbleSortStrategy();
+                    }
+                    else
+                    {
+                        sortStrategy = new QuickSortStrategy();
+                    }
+                    strategy = sortStrategy;
+                    ICommand sortCommand = new SortBookByTitleCommand(inventory, strategy);
+                    sortCommand.Execute();
+                }
+                else
+                {
+                    RunCommand(commandName);
+                }
             }
-        
-        }
+        }*/
     }
 }
